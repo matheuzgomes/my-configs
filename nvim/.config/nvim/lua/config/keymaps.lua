@@ -43,7 +43,7 @@ map("n", "<C-p>", function()
 end, { desc = "Find files" })
 
 -- BUSCAR NO PROJETO
-map("n", "<C-S-f>", function()
+map("n", "<leader>fw", function()
   Snacks.picker.grep()
 end, { desc = "Find in files" })
 
