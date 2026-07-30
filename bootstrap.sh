@@ -32,21 +32,26 @@ install_deps() {
       echo "→ Instalando Homebrew..."
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
-    brew install neovim tmux git ripgrep fd fzf stow
+    brew install neovim herdr git ripgrep fd fzf stow
   else
     # Ubuntu/Debian
     sudo apt-get update
-    sudo apt-get install -y neovim tmux git ripgrep fd-find fzf stow
+    sudo apt-get install -y neovim git ripgrep fd-find fzf stow
 
     # fd no Ubuntu chama fdfind, cria alias
     if ! command -v fd &>/dev/null && command -v fdfind &>/dev/null; then
       mkdir -p ~/.local/bin
       ln -sf "$(which fdfind)" ~/.local/bin/fd
     fi
+
+    # herdr: instala via script oficial (não está no apt)
+    if ! command -v herdr &>/dev/null; then
+      curl -fsSL https://herdr.dev/install.sh | sh
+    fi
   fi
 }
 
-echo -n "→ Instalar dependências? (nvim, tmux, rg, fd, fzf) [S/n] "
+echo -n "→ Instalar dependências? (nvim, herdr, rg, fd, fzf) [S/n] "
 read -r answer
 if [[ "$answer" != "n" ]] && [[ "$answer" != "N" ]]; then
   install_deps
@@ -57,17 +62,8 @@ cd "$(dirname "$0")"
 
 echo "→ Criando symlinks..."
 stow nvim   && echo "   ✓ nvim"
-stow tmux   && echo "   ✓ tmux"
-
-# ── TPM (tmux plugin manager) ──────────────────
-if [[ ! -d ~/.tmux/plugins/tpm ]]; then
-  echo "→ Instalando TPM..."
-  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-  echo "   ✓ TPM instalado"
-  echo "   ⚠ Abra o tmux e pressione prefix+I para instalar os plugins"
-fi
+stow --no-folding herdr && echo "   ✓ herdr"
 
 echo ""
 echo "=== Pronto! ==="
 echo "Abra o nvim e deixe o Lazy instalar os plugins."
-echo "No tmux: prefix+I para instalar plugins (floax, etc)."

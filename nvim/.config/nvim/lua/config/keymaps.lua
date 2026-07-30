@@ -52,11 +52,6 @@ map("n", "<F2>", function()
   vim.lsp.buf.rename()
 end, { desc = "Rename symbol" })
 
--- EXPLORADOR DE ARQUIVOS
-map("n", "<A-b>", function()
-  require("snacks.explorer").toggle()
-end, { desc = "Toggle file explorer" })
-
 -- IR PRA DEFINICAO
 map("n", "<F12>", function()
   vim.lsp.buf.definition()

@@ -1,0 +1,7 @@
+onboarding = false
+[keys]
+toggle_sidebar = "prefix+p"
+
+[theme]
+name = "catppuccin"
+auto_switch = false
